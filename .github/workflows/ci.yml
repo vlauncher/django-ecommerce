@@ -41,7 +41,9 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
+          pip install --upgrade pip
           pip install -r requirements.txt
+          pip install coverage  # Ensure coverage is installed
 
       - name: 📂 Set Up Environment Variables
         run: |
@@ -58,16 +60,17 @@ jobs:
           source venv/bin/activate
           python manage.py migrate
 
-      - name: 🧪 Run Tests with Coverage
+      - name: 🧪 Run Tests with Coverage (Django's built-in test runner)
         run: |
           source venv/bin/activate
-          coverage run manage.py test
+          python -m coverage run manage.py test
 
       - name: 📊 Check Coverage
         run: |
-          coverage report
-          coverage xml
-          TOTAL_COVERAGE=$(coverage report | tail -1 | awk '{print $NF}' | tr -d '%')
+          source venv/bin/activate
+          python -m coverage report
+          python -m coverage xml
+          TOTAL_COVERAGE=$(python -m coverage report | tail -1 | awk '{print $NF}' | tr -d '%')
           if (( $(echo "$TOTAL_COVERAGE < 90" | bc -l) )); then
             echo "❌ Test coverage ($TOTAL_COVERAGE%) is below 90%."
             exit 1
