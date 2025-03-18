@@ -77,9 +77,3 @@ jobs:
           else
             echo "✅ Test coverage ($TOTAL_COVERAGE%) meets the requirement."
           fi
-
-      - name: 📤 Upload Coverage Report (Optional)
-        uses: codecov/codecov-action@v3
-        with:
-          file: ./coverage.xml
-          fail_ci_if_error: true
