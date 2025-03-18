@@ -61,7 +61,7 @@ jobs:
       - name: 🧪 Run Tests with Coverage
         run: |
           source venv/bin/activate
-          coverage run -m pytest
+          coverage run manage.py test
 
       - name: 📊 Check Coverage
         run: |
