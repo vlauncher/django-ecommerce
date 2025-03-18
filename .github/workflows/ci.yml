@@ -1,0 +1,82 @@
+name: Django CI
+
+on:
+  push:
+    branches:
+      - feature/**  # Runs on main branch
+      - feat/**  # Runs on any branch starting with feat/
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: django
+          POSTGRES_PASSWORD: django
+          POSTGRES_DB: test_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U django"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - name: 🛎️ Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: 📦 Install Dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: 📂 Set Up Environment Variables
+        run: |
+          echo "SECRET_KEY=hdejodeodek" >> .env
+          echo "DB_NAME=test_db" >> .env
+          echo "DB_USER=django" >> .env
+          echo "DB_PASSWORD=django" >> .env
+          echo "DB_HOST=localhost" >> .env
+          echo "DB_PORT=5432" >> .env
+          echo "DATABASE_URL=postgres://django:django@localhost:5432/test_db" >> .env
+
+      - name: 🔄 Apply Migrations
+        run: |
+          source venv/bin/activate
+          python manage.py migrate
+
+      - name: 🧪 Run Tests with Coverage
+        run: |
+          source venv/bin/activate
+          coverage run -m pytest
+
+      - name: 📊 Check Coverage
+        run: |
+          coverage report
+          coverage xml
+          TOTAL_COVERAGE=$(coverage report | tail -1 | awk '{print $NF}' | tr -d '%')
+          if (( $(echo "$TOTAL_COVERAGE < 90" | bc -l) )); then
+            echo "❌ Test coverage ($TOTAL_COVERAGE%) is below 90%."
+            exit 1
+          else
+            echo "✅ Test coverage ($TOTAL_COVERAGE%) meets the requirement."
+          fi
+
+      - name: 📤 Upload Coverage Report (Optional)
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: true
