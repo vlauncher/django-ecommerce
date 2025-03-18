@@ -3,8 +3,8 @@ name: Django CI
 on:
   push:
     branches:
-      - feature/**  # Runs on main branch
-      - feat/**  # Runs on any branch starting with feat/
+      - main  # Runs on main branch
+      - feature/**  # Runs on any branch starting with feat/
   pull_request:
     branches:
       - main
