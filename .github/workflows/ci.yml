@@ -3,8 +3,8 @@ name: Django CI
 on:
   push:
     branches:
-      - main  # Runs on main branch
-      - feature/**  # Runs on any branch starting with feature/
+      - main
+      - feature/**
   pull_request:
     branches:
       - main
@@ -28,6 +28,16 @@ jobs:
           --health-timeout=5s
           --health-retries=5
 
+    env:
+      SECRET_KEY: django-insecure-7!50)8t_u+(*(0q1^nrh^or1gwc41t108ay+1@l=d=x7*gsnrj
+      SIGNING_KEY: django-insecure-7!50)8t_u+(*(0q1^nrh^or1gwc41t108ay+1@l=d=x7*gsnrj
+      DEBUG: "True"
+      DB_NAME: django_ecommerce_db
+      DB_USER: v2dent
+      DB_PASSWORD: Chelsea24462!
+      DB_HOST: 127.0.0.1
+      DB_PORT: "5432"  # Ensure this is a string if needed
+
     steps:
       - name: 🛎️ Checkout Repository
         uses: actions/checkout@v4
@@ -45,21 +55,12 @@ jobs:
           pip install -r requirements.txt
           pip install coverage
 
-      - name: 📂 Set Up Environment Variables
-        run: |
-          echo "SECRET_KEY=hdejodeodek" >> .env
-          echo "DB_NAME=django_ecommerce_db" >> .env
-          echo "DB_USER=v2dent" >> .env
-          echo "DB_PASSWORD=Chelsea24462!" >> .env
-          echo "DB_HOST=127.0.0.1" >> .env
-          echo "DB_PORT=5432" >> .env
-
       - name: 🔄 Apply Migrations
         run: |
           source venv/bin/activate
           python manage.py migrate
 
-      - name: 🧪 Run Tests with Coverage (Django's built-in test runner)
+      - name: 🧪 Run Tests with Coverage
         run: |
           source venv/bin/activate
           python -m coverage run manage.py test
