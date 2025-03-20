@@ -47,6 +47,7 @@ jobs:
 
       - name: 📂 Set Up Environment Variables
         run: |
+          echo "SECRET_KEY=hdejodeodek" >> .env
           echo "DB_NAME=django_ecommerce_db" >> .env
           echo "DB_USER=v2dent" >> .env
           echo "DB_PASSWORD=Chelsea24462!" >> .env
