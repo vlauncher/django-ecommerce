@@ -2,6 +2,7 @@
 Django settings for todos_project project.
 """
 
+from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
@@ -106,6 +107,7 @@ class Profile(models.Model):
     age = models.PositiveIntegerField(default=0)
     address = models.CharField(max_length=100, default="")
     phone_number = models.CharField(max_length=15, default="")
+    profile_image = CloudinaryField("image", folder="ecommerce_profiles", default="")
 
     def __str__(self):
         """

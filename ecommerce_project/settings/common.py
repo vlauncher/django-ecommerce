@@ -14,6 +14,7 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+from cloudinary import config
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -52,6 +53,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "djoser",
     "drf_yasg",
+    "cloudinary",
 ]
 
 INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS
@@ -159,3 +161,11 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "SIGNING_KEY": os.getenv("SIGNING_KEY"),
 }
+
+# Cloudinary
+config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True,
+)

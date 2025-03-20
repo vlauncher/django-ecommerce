@@ -19,19 +19,20 @@ from django.shortcuts import redirect
 from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework import permissions
+from rest_framework import authentication, permissions
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="TODO API",
+        title="Ecommerce API",
         default_version="v1",
-        description="TODO API",
+        description="Ecommerce API",
         terms_of_service="",
         contact=openapi.Contact(email=""),
         license=openapi.License(name=""),
     ),
     public=True,
-    permission_classes=(permissions.AllowAny,),
+    authentication_classes=[authentication.TokenAuthentication],
+    permission_classes=[permissions.AllowAny],
 )
 
 urlpatterns = [
@@ -45,4 +46,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/auth/", include("djoser.urls")),
     path("api/v1/auth/", include("djoser.urls.jwt")),
+    path("api/v1/auth/profiles/", include("users.urls")),
 ]
