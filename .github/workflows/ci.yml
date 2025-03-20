@@ -53,7 +53,8 @@ jobs:
           echo "DB_PASSWORD=django" >> .env
           echo "DB_HOST=localhost" >> .env
           echo "DB_PORT=5432" >> .env
-          echo "DATABASE_URL=postgres://django:django@localhost:5432/test_db" >> .env
+          echo "DATABASE_URL=postgresql://django:django@localhost:5432/test_db?sslmode=disable" >> .env
+
 
       - name: 🔄 Apply Migrations
         run: |
