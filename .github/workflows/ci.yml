@@ -29,14 +29,14 @@ jobs:
           --health-retries=5
 
     env:
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
-      SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-      DEBUG: ${{ secrets.DEBUG }}
-      DB_NAME: ${{ secrets.DB_NAME }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_PORT: ${{ secrets.DB_PORT }}
+      SECRET_KEY: django-insecure-7!50)8t_u+(*(0q1^nrh^or1gwc41t108ay+1@l=d=x7*gsnrj
+      SIGNING_KEY: django-insecure-7!50)8t_u+(*(0q1^nrh^or1gwc41t108ay+1@l=d=x7*gsnrj
+      DEBUG: "True"
+      DB_NAME: django_ecommerce_db
+      DB_USER: v2dent
+      DB_PASSWORD: Chelsea24462!
+      DB_HOST: 127.0.0.1
+      DB_PORT: "5432"  # Ensure this is a string if needed
 
     steps:
       - name: 🛎️ Checkout Repository
