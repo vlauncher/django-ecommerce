@@ -1,0 +1,18 @@
+[run]
+branch = True
+source = .
+# Optionally, you can omit common directories like migrations or tests:
+omit =
+    */migrations/*
+    */tests/*
+
+[report]
+# Only include the following files in the coverage report
+include =
+    */services.py
+    */models.py
+    */views.py
+    */serializers.py
+
+[html]
+directory = coverage_html_report
