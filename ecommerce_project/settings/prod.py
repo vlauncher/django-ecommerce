@@ -1,6 +1,6 @@
 import dj_database_url
 
-from ecommerce_project.settings.common import os
+from ecommerce_project.settings.common import *
 
 ALLOWED_HOSTS = ["*"]
 

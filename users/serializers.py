@@ -3,8 +3,9 @@ Serializer for User model.
 """
 
 from djoser.serializers import UserCreateSerializer, UserSerializer
+from rest_framework import serializers
 
-from .models import User
+from .models import Profile, User
 
 
 class UserCreateSerializer(UserCreateSerializer):
@@ -37,3 +38,19 @@ class UserSerializer(UserSerializer):
 
         model = User
         fields = ("email", "first_name", "last_name")
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    profile_image = serializers.ImageField(max_length=None, use_url=True)
+    """
+    Serializer for Profile model.
+
+    """
+
+    class Meta(UserSerializer.Meta):
+        """
+        Meta class for ProfileSerializer.
+        """
+
+        model = Profile
+        fields = ("age", "address", "phone_number", "profile_image")
