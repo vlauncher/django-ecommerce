@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main  # Runs on main branch
-      - feature/**  # Runs on any branch starting with feat/
+      - feature/**  # Runs on any branch starting with feature/
   pull_request:
     branches:
       - main
@@ -17,13 +17,13 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_USER: django
-          POSTGRES_PASSWORD: django
-          POSTGRES_DB: test_db
+          POSTGRES_USER: v2dent
+          POSTGRES_PASSWORD: Chelsea24462!
+          POSTGRES_DB: django_ecommerce_db
         ports:
           - 5432:5432
         options: >-
-          --health-cmd="pg_isready -U django"
+          --health-cmd="pg_isready -U v2dent"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -43,18 +43,15 @@ jobs:
           source venv/bin/activate
           pip install --upgrade pip
           pip install -r requirements.txt
-          pip install coverage  # Ensure coverage is installed
+          pip install coverage
 
       - name: 📂 Set Up Environment Variables
         run: |
-          echo "SECRET_KEY=hdejodeodek" >> .env
-          echo "DB_NAME=test_db" >> .env
-          echo "DB_USER=django" >> .env
-          echo "DB_PASSWORD=django" >> .env
-          echo "DB_HOST=localhost" >> .env
+          echo "DB_NAME=django_ecommerce_db" >> .env
+          echo "DB_USER=v2dent" >> .env
+          echo "DB_PASSWORD=Chelsea24462!" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
           echo "DB_PORT=5432" >> .env
-          echo "DATABASE_URL=postgresql://django:django@localhost:5432/test_db?sslmode=disable" >> .env
-
 
       - name: 🔄 Apply Migrations
         run: |
