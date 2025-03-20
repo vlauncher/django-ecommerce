@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  web:
+    build: .
+    command: gunicorn ecommerce_project.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=django_ecommerce_db
+      - DB_USER=v2dent
+      - DB_PASSWORD=Chelsea24462!
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DEBUG=True
+      - SECRET_KEY=django-insecure-7!50)8t_u+(*(0q1^nrh^or1gwc41t108ay+1@l=d=x7*gsnrj
+      - SIGNING_KEY=django-insecure-7!50)8t_u+(*(0q1^nrh^or1gwc41t108ay+1@l=d=x7*gsnrj
+      - CLOUDINARY_CLOUD_NAME=devqj6tju
+      - CLOUDINARY_API_KEY=884819237524766
+      - CLOUDINARY_API_SECRET=nhk-ptKPJUwku9CwvMQt8dXvS7U
+
+  db:
+    image: postgres:17-bullseye
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=django_ecommerce_db
+      - POSTGRES_USER=v2dent
+      - POSTGRES_PASSWORD=Chelsea24462!
+    ports:
+      - "5433:5432"
+
+volumes:
+  postgres_data:
