@@ -1,4 +1,4 @@
-from ecommerce_project.settings.common import os
+from ecommerce_project.settings.common import *
 
 DATABASES = {
     "default": {
